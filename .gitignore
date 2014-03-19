@@ -2,12 +2,26 @@
 *.slo
 *.lo
 *.o
+main
+*.exe
 
 # Compiled Dynamic libraries
 *.so
-*.dylib
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
+
+#python
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+#perso
+trunk/mgf/
+#*.mgf
+!file_test.mgf
+*.arp
+*.vim
