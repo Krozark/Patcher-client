@@ -12,23 +12,27 @@ namespace patcher
     void MainWindow::initMenu()
     {
         //Fichier
-        QMenu *menuFichier  = menuBar()->addMenu("&Fichier");
+        QMenu* menuFichier  = menuBar()->addMenu("&Fichier");
         ///Quitter
-        QAction *actionQuitter = new QAction("&Quitter", this);
+        QAction* actionQuitter = new QAction("&Quitter", this);
         menuFichier->addAction(actionQuitter);
         connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
         actionQuitter->setShortcut(QKeySequence("Ctrl+Q"));
         //actionQuitter->setIcon(QIcon("quitter.png"));
 
         //Edition
-        QMenu *menuEdition  = menuBar()->addMenu("&Edition");
+        QMenu* menuEdition  = menuBar()->addMenu("&Edition");
         //actionGras->setCheckable(true);
 
-        QAction *actionConfiguration = new QAction("&Configuration", this);
+        QAction* actionConfiguration = new QAction("&Configuration", this);
         menuEdition->addAction(actionConfiguration);
 
         //Aide
-        QMenu *menuAide     = menuBar()->addMenu("&Aide");
+        QMenu* menuAide     = menuBar()->addMenu("&Aide");
+        ///Version
+        QAction* actionVersion  = new QAction("&Version",this);
+        menuAide->addAction(actionVersion);
+
 
     }
 }
