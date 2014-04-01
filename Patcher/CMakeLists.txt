@@ -17,8 +17,6 @@ set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 
 
-# add the  header path
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # add an option for choosing the build type (shared or static)
 #set_option(BUILD_SHARED_LIBS FALSE BOOL "TRUE to build as shared libraries, FALSE to build it as static libraries")
@@ -26,19 +24,25 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 # add an option for building the API documentation
 set_option(BUILD_DOC TRUE BOOL "TRUE to generate the API documentation, FALSE to ignore it")
 
+############ QT ####################
+# Appeler automatique le moc quand nécessaire
+SET(CMAKE_AUTOMOC ON)
+# Les fichiers générés par le moc sont générés dans le dossier bin, dire à CMake de toujours 	
+# inclure les entêtes de ce dossier
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Le module QtWidgets trouve ses propres dépendances
+FIND_PACKAGE(Qt5Widgets REQUIRED)
+
+######### END Qt ##########################
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 
 #set(includepath "-I${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(DEFINES "")
-
-if(${WIN32})
-    set(LIBS "")
-else()
-    set(LIBS "")
-endif()
-
 set(WARNING "-Wall")
 set(FLAGS "-o3 -std=c++0x")
-set(CMAKE_CXX_FLAGS "${DEFINES} ${WARNING} ${FLAGS} ${LIBS}")
+set(CMAKE_CXX_FLAGS "${DEFINES} ${WARNING} ${FLAGS}")
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
