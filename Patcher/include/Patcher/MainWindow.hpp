@@ -8,5 +8,8 @@ namespace patcher
         Q_OBJECT
         public:
             MainWindow(const QString& title="");
+
+        private:
+            void initMenu();
     };
 }
