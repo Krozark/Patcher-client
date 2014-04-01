@@ -10,6 +10,6 @@ language: cpp
 compiler: g++
 
 script : g++ -v
-    && cd Pactcher
+    && cd Patcher
     && cmake .
     && make
