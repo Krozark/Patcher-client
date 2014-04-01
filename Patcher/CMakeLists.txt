@@ -25,6 +25,9 @@ set(VERSION_PATCH 0)
 set_option(BUILD_DOC TRUE BOOL "TRUE to generate the API documentation, FALSE to ignore it")
 
 ############ QT ####################
+if(WIN32)
+	set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.2.1/5.2.1/mingw48_32")
+endif()
 # Appeler automatique le moc quand nécessaire
 SET(CMAKE_AUTOMOC ON)
 # Les fichiers générés par le moc sont générés dans le dossier bin, dire à CMake de toujours 	

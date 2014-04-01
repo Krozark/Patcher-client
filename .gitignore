@@ -25,3 +25,4 @@ trunk/mgf/
 !file_test.mgf
 *.arp
 *.vim
+build
