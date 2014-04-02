@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.8.8)
 
 # define a macro that helps defining an option
 macro(set_option var default type docstring)
