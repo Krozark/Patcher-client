@@ -35,11 +35,15 @@ SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Le module QtWidgets trouve ses propres dépendances
 FIND_PACKAGE(Qt5Widgets REQUIRED)
+FIND_PACKAGE(Qt5Network REQUIRED)
 
 ######### END Qt ##########################
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+
+find_library(MONITORING_LIB monitoring)
+set(LIBS ${MONITORING_LIB})
 
 #set(includepath "-I${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(DEFINES "")
