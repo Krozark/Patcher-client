@@ -9,6 +9,8 @@
 
 #include <QEventLoop>
 
+#include <stdio.h>
+
 namespace patcher
 {
     
@@ -81,8 +83,7 @@ namespace patcher
 
     bool Maj::erase()
     {
-        bool ok = true;
-        return ok;
+        return QFile::remove(filename.c_str());
     }
 
     bool Maj::replace()
@@ -98,7 +99,13 @@ namespace patcher
 
     bool Maj::write()
     {
-        bool ok = true;
+        bool ok = ::rename(("download/"+filename).c_str(),filename.c_str()) == 0;
+        if (filename == Config::softname)
+            QFile::setPermissions(filename.c_str(),
+                                  QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner
+                                  |QFile::ReadGroup|QFile::ExeGroup
+                                  |QFile::ReadOther|QFile::ExeOther
+                                  );
         return ok;
     }
     
