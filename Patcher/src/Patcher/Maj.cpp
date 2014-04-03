@@ -100,7 +100,7 @@ namespace patcher
     bool Maj::write()
     {
         bool ok = ::rename(("download/"+filename).c_str(),filename.c_str()) == 0;
-        if (filename == Config::softname)
+        if (filename == Config::softname or filename == Config::softname+".exe")
             QFile::setPermissions(filename.c_str(),
                                   QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner
                                   |QFile::ReadGroup|QFile::ExeGroup
