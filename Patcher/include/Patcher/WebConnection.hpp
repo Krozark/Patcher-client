@@ -2,26 +2,35 @@
 #define PATCHER_WEBCONNECTION_HPP
 
 #include <string>
+#include <list>
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 
 namespace patcher
 {
+    class Config;
+    class Maj;
+
     class WebConnection
     {
         public:
             WebConnection(const WebConnection&) = delete;
             WebConnection& operator=(const WebConnection&) = delete;
+
             
             /**
              * \brief Construct the WebConnection
-             * \param base_url the patcher base url of the website www.example.com/patcher/
+             * \param conf the patcher configuration
              */
-            WebConnection(const std::string& base_url);
+            WebConnection(Config& conf);
+                
+            std::string majUrl()const;
+
+            std::list<Maj> getMaj();
 
         private:
-            const std::string base_url;
+            Config& config;
             QNetworkRequest request;
             QNetworkAccessManager networkManager;
 

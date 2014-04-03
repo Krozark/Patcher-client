@@ -5,6 +5,12 @@ install:
     && sudo apt-get install libmysqlcppconn-dev libsqlite3-dev g++-4.8 qt-sdk qtdeclarative5-dev
     && sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 50
     && sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
+    && wget http://www.cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz
+    && tar -xzvf cmake-2.8.12.2.tar.gz
+    && cd cmake-2.8.12.2
+    && cmake .
+    && make && make install
+    && cd ..
 
 language: cpp
 

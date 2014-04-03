@@ -6,12 +6,14 @@ configure_file(${INCROOT}/defines.hpp.in ${INCROOT}/defines.hpp @ONLY)
 set(ROOT_SRC
     ${SRCROOT}/Config.cpp
     ${SRCROOT}/MainWindow.cpp
+    ${SRCROOT}/Maj.cpp
     ${SRCROOT}/WebConnection.cpp
 )
 set(ROOT_HEADER
     ${INCROOT}/Config.hpp
     ${INCROOT}/defines.hpp
     ${INCROOT}/MainWindow.hpp
+    ${INCROOT}/Maj.hpp
     ${INCROOT}/WebConnection.hpp
 )
 set(ROOT_FILES

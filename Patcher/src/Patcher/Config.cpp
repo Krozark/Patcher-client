@@ -5,6 +5,7 @@
 #include <QSettings>
 
 #include <fstream>
+#include <sstream>
 
 #include <Monitoring/sys.hpp>
 
@@ -84,6 +85,16 @@ namespace patcher
             <<"name="<<self.os<<std::endl
             <<"bit="<<self.bits<<std::endl;
         return output;
+    }
+
+    std::string Config::numberToString(int number)
+    {
+        unsigned int major = number / (100*100);
+        unsigned int minor = number / 100 - major*100;
+        unsigned int patch = number - (minor + major*100)*100;
+        std::stringstream stream;
+        stream<<major<<"."<<minor<<"."<<patch;
+        return stream.str();
     }
 
     void Config::makeDefault()

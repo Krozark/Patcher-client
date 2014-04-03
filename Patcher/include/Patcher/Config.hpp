@@ -33,7 +33,12 @@ namespace patcher
             int getBits() const;
 
             friend std::ostream& operator<<(std::ostream& output,const Config& self);
-            
+
+            /**
+             * \brief convert number version to x.y.z
+             * \param number a number version
+             */
+            static std::string numberToString(int number);
             
         private:
             void makeDefault();
@@ -42,9 +47,10 @@ namespace patcher
             void createOrLoad();
 
             std::string url;
-            int version;
+            unsigned int version;
             std::string os;
-            int bits;
+            unsigned int bits;
+
     };
 }
 #endif
