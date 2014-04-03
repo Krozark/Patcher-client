@@ -117,7 +117,6 @@ namespace patcher
 
     void Config::loadFile(QFile& f)
     {
-        std::cout<<"loadFile"<<std::endl;
         QSettings settings(filename.c_str(),QSettings::IniFormat);
 
         //website

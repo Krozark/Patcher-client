@@ -32,6 +32,8 @@ namespace patcher
             void setBits();
             int getBits() const;
 
+            void makeFile();
+
             friend std::ostream& operator<<(std::ostream& output,const Config& self);
 
             /**
@@ -42,7 +44,6 @@ namespace patcher
             
         private:
             void makeDefault();
-            void makeFile();
             void loadFile(QFile& f);
             void createOrLoad();
 

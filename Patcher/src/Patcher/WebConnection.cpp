@@ -70,12 +70,19 @@ namespace patcher
 
         int status = json.value("status").toVariant().value<int>();
 
-        if(status)
+        switch(status) //0:ok, 1:not soft, 2:not src version, 3:no destionation, 4:lastest
         {
-            QString msg = json.value("message").toString();
-            QMessageBox::warning(nullptr,"Error","Recive error code:"+QString::number(status)
-                                 +"\nMessage:"+msg);
-            return results;
+            case 0: //all is good
+            case 4 : //lastes
+            {
+            }break;
+            default:
+            {
+                QString msg = json.value("message").toString();
+                QMessageBox::warning(nullptr,"Error","Recive error code:"+QString::number(status)
+                                     +"\nMessage:"+msg);
+                return results;
+            }break;
         }
 
 
@@ -94,7 +101,7 @@ namespace patcher
 
 
         config.setVersion(datas.value("version").toVariant().value<int>());
-        //config.makeFile();
+        config.makeFile();
 
         return results;
     }

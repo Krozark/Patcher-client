@@ -16,7 +16,6 @@ int main(int argc,char* argv[])
 
 
     patcher::Config conf;
-    std::cout<<conf<<std::endl;
 
     patcher::WebConnection con(conf);
     for(patcher::Maj& maj : con.getMaj())
