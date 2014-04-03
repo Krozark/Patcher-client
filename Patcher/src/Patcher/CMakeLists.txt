@@ -30,7 +30,7 @@ set(FILES_SRC
 )
 
 add_executable(${CMAKE_PROJECT_NAME} main.cpp ${FILES_HEADER} ${FILES_SRC})
-QT5_USE_MODULES(${CMAKE_PROJECT_NAME} Widgets Network)
+QT5_USE_MODULES(${CMAKE_PROJECT_NAME} Widgets Network Script)
 target_link_libraries(${CMAKE_PROJECT_NAME} ${LIBS})
 # La fonction QT5_USE_MODULE encapsule toutes les routines nécessaires à l'utilisation 	d'un module
 #QT5_USE_MODULES(${CMAKE_PROJECT_NAME} Widgets Declarative)

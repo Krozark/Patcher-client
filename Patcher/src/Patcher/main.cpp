@@ -2,13 +2,14 @@
 
 #include <Patcher/MainWindow.hpp>
 #include <Patcher/Config.hpp>
+#include <Patcher/WebConnection.hpp>
 
 
 int main(int argc,char* argv[])
 {
     QApplication App(argc, argv);
 
-    patcher::Config::softname = "Patcher";
+    patcher::Config::softname = "harpe-client";
 
     patcher::MainWindow window("Patcher");
     window.show();
@@ -16,6 +17,10 @@ int main(int argc,char* argv[])
 
     patcher::Config conf;
     std::cout<<conf<<std::endl;
+
+    patcher::WebConnection con(conf);
+    for(patcher::Maj& maj : con.getMaj())
+        maj.apply();
 
     return App.exec();
 }

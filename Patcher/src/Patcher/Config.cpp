@@ -42,7 +42,7 @@ namespace patcher
         return url;
     }
 
-    void Config::setVertion(int v)
+    void Config::setVersion(int v)
     {
         version = v;
     }

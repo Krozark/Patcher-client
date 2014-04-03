@@ -7,10 +7,11 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 
+#include <Patcher/Maj.hpp>
+
 namespace patcher
 {
     class Config;
-    class Maj;
 
     class WebConnection
     {

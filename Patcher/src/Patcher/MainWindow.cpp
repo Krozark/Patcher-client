@@ -5,8 +5,20 @@ namespace patcher
 {
     MainWindow::MainWindow(const QString& title) : QMainWindow()
     {
+         actionQuitter = 
+             actionConfiguration = 
+             actionVersion = nullptr;
+
          setWindowTitle(title);
          initMenu();
+
+    }
+
+    MainWindow::~MainWindow()
+    {
+        delete actionQuitter;
+        delete actionConfiguration;
+        delete actionVersion;
     }
 
     void MainWindow::initMenu()
@@ -14,7 +26,7 @@ namespace patcher
         //Fichier
         QMenu* menuFichier  = menuBar()->addMenu("&Fichier");
         ///Quitter
-        QAction* actionQuitter = new QAction("&Quitter", this);
+        actionQuitter = new QAction("&Quitter", this);
         menuFichier->addAction(actionQuitter);
         connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
         actionQuitter->setShortcut(QKeySequence("Ctrl+Q"));
@@ -24,13 +36,13 @@ namespace patcher
         QMenu* menuEdition  = menuBar()->addMenu("&Edition");
         //actionGras->setCheckable(true);
 
-        QAction* actionConfiguration = new QAction("&Configuration", this);
+        actionConfiguration = new QAction("&Configuration", this);
         menuEdition->addAction(actionConfiguration);
 
         //Aide
         QMenu* menuAide     = menuBar()->addMenu("&Aide");
         ///Version
-        QAction* actionVersion  = new QAction("&Version",this);
+        actionVersion  = new QAction("&Version",this);
         menuAide->addAction(actionVersion);
 
 

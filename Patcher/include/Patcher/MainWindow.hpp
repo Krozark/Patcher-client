@@ -14,9 +14,13 @@ namespace patcher
             MainWindow& operator=(const MainWindow&) = delete;
 
             MainWindow(const QString& title="");
+            ~MainWindow();
 
         private:
             void initMenu();
+            QAction* actionQuitter;
+            QAction* actionConfiguration;
+            QAction* actionVersion;
     };
 }
 

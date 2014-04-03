@@ -36,6 +36,7 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Le module QtWidgets trouve ses propres dépendances
 FIND_PACKAGE(Qt5Widgets REQUIRED)
 FIND_PACKAGE(Qt5Network REQUIRED)
+FIND_PACKAGE(Qt5Script REQUIRED)
 
 ######### END Qt ##########################
 

@@ -23,7 +23,7 @@ namespace patcher
             void setUrl();
             const std::string getUrl() const;
 
-            void setVertion(int);
+            void setVersion(int);
             int getVersion() const;
 
             void setOs();
