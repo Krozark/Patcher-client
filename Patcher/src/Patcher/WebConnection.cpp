@@ -73,8 +73,11 @@ namespace patcher
         switch(status) //0:ok, 1:not soft, 2:not src version, 3:no destionation, 4:lastest
         {
             case 0: //all is good
+            {
+            }break;
             case 4 : //lastes
             {
+                return results;
             }break;
             default:
             {
