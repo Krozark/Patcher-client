@@ -3,6 +3,7 @@
 #include <QUrl>
 #include <QInputDialog>
 #include <QSettings>
+#include <QDir>
 
 #include <fstream>
 #include <sstream>
@@ -155,6 +156,9 @@ namespace patcher
     void Config::createOrLoad()
     {
        QFile f(filename.c_str());
+
+       if(not QDir("download").exists())
+           QDir().mkdir("download");
 
         if(!f.exists()) 
         {       

@@ -1,12 +1,18 @@
 #include <Patcher/Maj.hpp>
 
+#include <QObject>
 #include <QUrl>
+#include <QFile>
 #include <QNetworkRequest>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
+#include <QEventLoop>
 
 namespace patcher
 {
     
-    Maj::Maj(int action,std::string filename,std::string url): action(action), filename(filename), url(url), done(false)
+    Maj::Maj(Config& conf,int action,std::string filename,std::string url): action(action), filename(filename), url(url),config(conf), done(false)
     {
     }
 
@@ -40,23 +46,37 @@ namespace patcher
 
     bool Maj::download()
     {
-        std::cout<<"[patcher] download file \""<<filename<<"\" from "<<url<<std::endl;
+        std::cout<<"[patcher] download file \""<<filename<<"\" from "<<url<<" "<<std::flush;
 
         QUrl base_url(config.getUrl().c_str());
-        QUrl relative_url(majUrl().c_str());
+        QUrl relative_url(url.c_str());
         QUrl url =  base_url.resolved(relative_url);
 
 
-        QNetworkAccessManager networkManager;
         QNetworkRequest request;
-
         request.setUrl(url);
-        QNetworkReply* reply = networkManager.get(request);  // GET
+
+        QNetworkAccessManager networkManager;
+        QNetworkReply* reply = networkManager.get(request);
+
+        QEventLoop loop;
+        QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+        loop.exec();
         
+        //open file
+        QFile localFile(("download/"+filename).c_str());
+        if (!localFile.open(QIODevice::WriteOnly))
+        {
+            std::cout<<"Failed"<<std::endl;
+            return false;
+        }
+        //write in it
+        localFile.write(reply->readAll());
+        localFile.close();
         delete reply;
 
-        bool ok = true;
-        return ok;
+        std::cout<<"Ok"<<std::endl;
+        return true;
     }
 
     bool Maj::erase()

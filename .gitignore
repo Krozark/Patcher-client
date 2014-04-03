@@ -26,3 +26,5 @@ trunk/mgf/
 *.arp
 *.vim
 build
+Patcher/download
+*.ini

@@ -86,7 +86,8 @@ namespace patcher
         for(int i=0;i<_size;++i)
         {
             QJsonObject file = files.at(i).toObject();
-            results.emplace_back(file.value("action").toVariant().value<int>(),
+            results.emplace_back(config,
+                                 file.value("action").toVariant().value<int>(),
                                  file.value("filename").toString().toStdString(),
                                  file.value("url").toString().toStdString());
         }
