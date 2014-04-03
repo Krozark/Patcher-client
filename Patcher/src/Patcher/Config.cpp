@@ -2,12 +2,16 @@
 
 #include <QUrl>
 #include <QInputDialog>
+#include <QSettings>
+
+#include <fstream>
 
 #include <Monitoring/sys.hpp>
 
 namespace patcher
 {
     const std::string Config::filename = "config.ini";
+    std::string Config::softname = "unknow";
 
     Config::Config()
     {
@@ -67,6 +71,21 @@ namespace patcher
         return bits;
     }
 
+    std::ostream& operator<<(std::ostream& output,const Config& self)
+    {
+        output<<"[website]"<<std::endl
+            <<"url="<<self.url<<std::endl
+
+            <<"[soft]"<<std::endl
+            //<<"name="<<Config::softname<<std::endl
+            <<"version="<<self.version<<std::endl
+
+            <<"[os]"<<std::endl
+            <<"name="<<self.os<<std::endl
+            <<"bit="<<self.bits<<std::endl;
+        return output;
+    }
+
     void Config::makeDefault()
     {
         setUrl();
@@ -79,11 +98,47 @@ namespace patcher
 
     void Config::makeFile()
     {
-
+        std::fstream f(filename, std::fstream::out | std::fstream::trunc);
+        f<<*this;
+        f.close();
     }
 
     void Config::loadFile(QFile& f)
     {
+        std::cout<<"loadFile"<<std::endl;
+        QSettings settings(filename.c_str(),QSettings::IniFormat);
+
+        //website
+        {
+            auto tmp = settings.value("website/url");
+            if(tmp.isNull())
+                setUrl();
+            else
+                url = tmp.toString().toStdString();
+        }
+        //soft
+        {
+            auto tmp = settings.value("soft/version");
+            if (tmp.isNull())
+                version = 0;
+            else
+                version = tmp.toInt();
+        }
+        //os
+        {
+            auto tmp = settings.value("os/name");
+            if(tmp.isNull())
+                setOs();
+            else
+                os = tmp.toString().toStdString();
+        }
+        {
+            auto tmp= settings.value("os/bit");
+            if(tmp.isNull())
+                setBits();
+            else
+                bits = tmp.toInt();
+        }
     }
 
     void Config::createOrLoad()

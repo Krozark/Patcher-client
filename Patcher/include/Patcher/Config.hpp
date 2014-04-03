@@ -2,6 +2,8 @@
 #define PATCHER_CONFIG_HPP
 
 #include <string>
+#include <iostream>
+
 #include <QFile>
 
 namespace patcher
@@ -13,6 +15,7 @@ namespace patcher
             Config& operator=(const Config&) = delete;
 
             static const std::string filename;
+            static std::string softname;
 
             Config();
 
@@ -28,6 +31,8 @@ namespace patcher
 
             void setBits();
             int getBits() const;
+
+            friend std::ostream& operator<<(std::ostream& output,const Config& self);
             
             
         private:
