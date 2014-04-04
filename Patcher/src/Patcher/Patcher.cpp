@@ -1,27 +1,43 @@
-#include <Patcher/MainWindow.hpp>
+#include <Patcher/Patcher.hpp>
+
+#include <Patcher/Config.hpp>
+#include <Patcher/WebConnection.hpp>
 
 
 namespace patcher
 {
-    MainWindow::MainWindow(const QString& title) : QMainWindow()
+    Patcher::Patcher(const std::string& soft) : QMainWindow(), conf(nullptr), maj_avalible(0)
     {
+        patcher::Config::softname = soft;
+
          actionQuitter = 
              actionConfiguration = 
              actionVersion = nullptr;
 
-         setWindowTitle(title);
+         setWindowTitle(("Patcher - "+soft).c_str());
          initMenu();
 
     }
 
-    MainWindow::~MainWindow()
+    Patcher::~Patcher()
     {
         delete actionQuitter;
         delete actionConfiguration;
         delete actionVersion;
+
+        delete conf;
     }
 
-    void MainWindow::initMenu()
+    void Patcher::start()
+    {
+        checkForMaj();
+        if(maj_avalible > 0)
+        {
+            execMaj();
+        }
+    }
+
+    void Patcher::initMenu()
     {
         //Fichier
         QMenu* menuFichier  = menuBar()->addMenu("&Fichier");
@@ -44,7 +60,29 @@ namespace patcher
         ///Version
         actionVersion  = new QAction("&Version",this);
         menuAide->addAction(actionVersion);
+    }
 
+    int Patcher::checkForMaj()
+    {
+        if(not conf)
+            conf = new Config;
 
+        patcher::WebConnection con(*conf);
+        majs = con.getMaj();
+
+        maj_avalible = majs.size();
+
+        return maj_avalible;
+    }
+
+    int Patcher::execMaj()
+    {
+        int nb = 0;
+        for(patcher::Maj& maj : majs)
+        {
+            if(not maj.isDone())
+                nb+= maj.apply();
+        }
+        return nb;
     }
 }

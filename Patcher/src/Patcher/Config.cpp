@@ -31,9 +31,9 @@ namespace patcher
         QString msg = "";
         do {
             u = QInputDialog::getText(nullptr, "title", "Url du site"+msg, QLineEdit::Normal);
-            msg = " Une URL valide est obligatoire";
+            msg = " Une URL est obligatoire";
         }
-        while(not QUrl(u).isValid() or u.isEmpty());
+        while(u.isEmpty());
 
         url = u.toStdString();
     }

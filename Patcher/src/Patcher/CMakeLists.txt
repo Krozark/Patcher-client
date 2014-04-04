@@ -5,14 +5,14 @@ configure_file(${INCROOT}/defines.hpp.in ${INCROOT}/defines.hpp @ONLY)
 #ROOT files
 set(ROOT_SRC
     ${SRCROOT}/Config.cpp
-    ${SRCROOT}/MainWindow.cpp
+    ${SRCROOT}/Patcher.cpp
     ${SRCROOT}/Maj.cpp
     ${SRCROOT}/WebConnection.cpp
 )
 set(ROOT_HEADER
     ${INCROOT}/Config.hpp
     ${INCROOT}/defines.hpp
-    ${INCROOT}/MainWindow.hpp
+    ${INCROOT}/Patcher.hpp
     ${INCROOT}/Maj.hpp
     ${INCROOT}/WebConnection.hpp
 )

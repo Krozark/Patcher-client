@@ -20,7 +20,7 @@ namespace patcher
             const std::string filename;///<the real file name
             const std::string url;///<the url to get the file (relative to Config::getUrl)
 
-            bool idDone() const;///< if done (with success)
+            bool isDone() const;///< if done (with success)
 
             bool apply(); ///< make the maj. return isDone()
 
