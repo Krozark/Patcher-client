@@ -3,6 +3,11 @@
 #include <Patcher/Config.hpp>
 #include <Patcher/WebConnection.hpp>
 
+#include <QProgressBar>
+
+#include <chrono>
+#include <thread>
+
 
 namespace patcher
 {
@@ -72,17 +77,37 @@ namespace patcher
 
         maj_avalible = majs.size();
 
+
+
         return maj_avalible;
     }
 
     int Patcher::execMaj()
     {
+        if (maj_avalible <= 0)
+            return 0;
+
+        QProgressBar progressBar;
+        progressBar.setMaximumHeight(16);
+        progressBar.setMaximumWidth(200);
+        //progressBar->setTextVisible(false);
+        progressBar.setRange(0,maj_avalible);
+        this->statusBar()->addPermanentWidget(&progressBar, 0);
+        this->statusBar()->showMessage(QString("Loading"));
+        
         int nb = 0;
+        int i = 1;
         for(patcher::Maj& maj : majs)
         {
+            this->statusBar()->showMessage(QString("download "+QString::number(i)+"/"+QString::number(maj_avalible)));
             if(not maj.isDone())
                 nb+= maj.apply();
+            progressBar.setValue(++i);
         }
+
+        this->statusBar()->clearMessage();
+        this->statusBar()->removeWidget(&progressBar);
+
         return nb;
     }
 }
