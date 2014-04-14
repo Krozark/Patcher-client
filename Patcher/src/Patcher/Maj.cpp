@@ -19,6 +19,11 @@ namespace patcher
     {
     }
 
+    bool Maj::isDone()const
+    {
+        return done;
+    }
+
     bool Maj::apply()
     {
         bool ok = true;
@@ -101,7 +106,11 @@ namespace patcher
     bool Maj::write()
     {
         bool ok = ::rename(("download/"+filename).c_str(),filename.c_str()) == 0;
-        if (filename == Config::softname or filename == Config::softname+".exe")
+        #if __WIN32
+        if(filename == Config::softname+".exe")
+        #else
+        if (filename == Config::softname)
+        #endif
             QFile::setPermissions(filename.c_str(),
                                   QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner
                                   |QFile::ReadGroup|QFile::ExeGroup

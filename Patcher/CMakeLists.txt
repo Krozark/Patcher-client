@@ -43,7 +43,7 @@ FIND_PACKAGE(Qt5Script REQUIRED)
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 
-find_library(MONITORING_LIB monitoring)
+find_library(MONITORING_LIB Monitoring)
 set(LIBS ${MONITORING_LIB})
 
 #set(includepath "-I${CMAKE_CURRENT_SOURCE_DIR}/include")

@@ -1,5 +1,12 @@
-#include <Patcher/MainWindow.hpp>
+#include <Patcher/Patcher.hpp>
+
+#include <Patcher/Config.hpp>
 #include <Patcher/WebConnection.hpp>
+
+#include <QProgressBar>
+
+#include <chrono>
+#include <thread>
 
 #include <Patcher/Config.hpp>
 
@@ -11,50 +18,66 @@
 #define ADD_MENU(parent,var,str) menus.push_back(parent->addMenu(str));\
     QMenu* var = menus.back();
 
+
 namespace patcher
 {
-    MainWindow::MainWindow(const QString& title) : QMainWindow()
+    Patcher::Patcher(const std::string& soft) : QMainWindow(), maj_avalible(0)
     {
-         setWindowTitle(title);
+        patcher::Config::softname = soft;
+
+         actionQuitter = 
+             actionConfiguration = 
+             actionVersion = nullptr;
+
+         setWindowTitle(("Patcher - "+soft).c_str());
          initMenu();
+
     }
 
-    MainWindow::~MainWindow()
+    Patcher::~Patcher()
     {
-        for(QAction* action : actions)
-            delete action;
-        actions.clear();
-
-        for(QMenu* menu : menus)
-            delete menu;
-        menus.clear();
+        delete actionQuitter;
+        delete actionConfiguration;
+        delete actionVersion;
     }
 
+    void Patcher::start()
+    {
+        configMaj();
+    }
+    
     //// SLOTS //////
-    void MainWindow::showVersion()const
+    void Patcher::showVersion()const
     {
         QMessageBox::information(nullptr,"Version","Version acctuelle:\n"+QString(Config::numberToString(Config::getVersion()).c_str()));
     }
 
-    void MainWindow::configSetUrl()const
+    void Patcher::configSetUrl()const
     {
         Config::setUrl();
         Config::makeFile();
     }
 
-    void MainWindow::configMaj()const
+    void Patcher::configMaj()
     {
+        Config::init();
         patcher::WebConnection con;
-        for(patcher::Maj& maj : con.getMaj())
-            maj.apply();
+        majs = con.getMaj();
+
+        maj_avalible = majs.size();
+
+        if(maj_avalible > 0)
+        {
+            execMaj();
+        }
     }
 
-    void MainWindow::configReset()const
+    void Patcher::configReset()const
     {
         Config::makeDefault();
     }
 
-    void MainWindow::initMenu()
+    void Patcher::initMenu()
     {
         //Fichier
         QMenu* menuFichier  = menuBar()->addMenu("&Fichier");
@@ -85,7 +108,34 @@ namespace patcher
         ///Version
         ADD_ACTION(menuAide,actionVersion,"&Version")
         connect(actionVersion, SIGNAL(triggered()),this, SLOT(showVersion()));
+    }
 
+    int Patcher::execMaj()
+    {
+        if (maj_avalible <= 0)
+            return 0;
 
+        QProgressBar progressBar;
+        progressBar.setMaximumHeight(16);
+        progressBar.setMaximumWidth(200);
+        //progressBar->setTextVisible(false);
+        progressBar.setRange(0,maj_avalible);
+        this->statusBar()->addPermanentWidget(&progressBar, 0);
+        this->statusBar()->showMessage(QString("Loading"));
+        
+        int nb = 0;
+        int i = 1;
+        for(patcher::Maj& maj : majs)
+        {
+            this->statusBar()->showMessage(QString("download "+QString::number(i)+"/"+QString::number(maj_avalible)));
+            if(not maj.isDone())
+                nb+= maj.apply();
+            progressBar.setValue(++i);
+        }
+
+        this->statusBar()->clearMessage();
+        this->statusBar()->removeWidget(&progressBar);
+
+        return nb;
     }
 }
