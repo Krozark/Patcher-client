@@ -36,17 +36,22 @@ namespace patcher
         QMessageBox::information(nullptr,"Version","Version acctuelle:\n"+QString(Config::numberToString(Config::getVersion()).c_str()));
     }
 
-    void MainWindow::setUrl()const
+    void MainWindow::configSetUrl()const
     {
         Config::setUrl();
         Config::makeFile();
     }
 
-    void MainWindow::maj()const
+    void MainWindow::configMaj()const
     {
         patcher::WebConnection con;
         for(patcher::Maj& maj : con.getMaj())
             maj.apply();
+    }
+
+    void MainWindow::configReset()const
+    {
+        Config::makeDefault();
     }
 
     void MainWindow::initMenu()
@@ -65,10 +70,15 @@ namespace patcher
         //actionGras->setCheckable(true);
 
         ADD_MENU(menuEdition,menuConfiguration,"&Configuration");
+
         ADD_ACTION(menuConfiguration,actionConfigurationUrl,"definir Url du site");
-        connect(actionConfigurationUrl,SIGNAL(triggered()),this,SLOT(setUrl()));
+        connect(actionConfigurationUrl,SIGNAL(triggered()),this,SLOT(configSetUrl()));
+
         ADD_ACTION(menuConfiguration,actionConfigurationMaj,"Lancer une Maj");
-        connect(actionConfigurationUrl,SIGNAL(triggered()),this,SLOT(maj()));
+        connect(actionConfigurationMaj,SIGNAL(triggered()),this,SLOT(configMaj()));
+
+        ADD_ACTION(menuConfiguration,actionConfigurationReset,"Reset");
+        connect(actionConfigurationReset,SIGNAL(triggered()),this,SLOT(configReset()));
 
         //Aide
         QMenu* menuAide     = menuBar()->addMenu("&Aide");

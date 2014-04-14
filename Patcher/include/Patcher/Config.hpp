@@ -43,9 +43,10 @@ namespace patcher
              */
             static std::string numberToString(int number);
 
+            static void makeDefault();
+
             
         private:
-            static void makeDefault();
             static void loadFile(QFile& f);
             static void createOrLoad();
 

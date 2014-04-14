@@ -19,8 +19,9 @@ namespace patcher
 
         public slots:
             void showVersion()const;
-            void setUrl()const;
-            void maj()const;
+            void configSetUrl()const;
+            void configMaj()const;
+            void configReset()const;
 
         private:
             void initMenu();
