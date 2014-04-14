@@ -9,8 +9,9 @@ install:
     && tar -xzvf cmake-2.8.12.2.tar.gz
     && cd cmake-2.8.12.2
     && cmake .
-    && make 
+    && make -j2 
     && sudo make install
+    && sudo update-alternatives --install /usr/bin/cmake cmake ./bin/cmake 50
     && cd ..
 
 language: cpp
