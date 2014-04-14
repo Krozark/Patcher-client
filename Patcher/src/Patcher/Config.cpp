@@ -14,8 +14,12 @@ namespace patcher
 {
     const std::string Config::filename = "config.ini";
     std::string Config::softname = "unknow";
+    std::string Config::url;
+    unsigned int Config::version = 0;
+    std::string Config::os;
+    unsigned int Config::bits = 0;
 
-    Config::Config()
+    void Config::init()
     {
         createOrLoad();
     }
@@ -38,7 +42,7 @@ namespace patcher
         url = u.toStdString();
     }
 
-    const std::string Config::getUrl() const
+    const std::string Config::getUrl()
     {
         return url;
     }
@@ -48,7 +52,7 @@ namespace patcher
         version = v;
     }
 
-    int Config::getVersion()const
+    int Config::getVersion()
     {
         return version;
     }
@@ -58,7 +62,7 @@ namespace patcher
         os = sys::osName();
     }
 
-    const std::string Config::getOs()const
+    const std::string Config::getOs()
     {
         return os;
     }
@@ -68,23 +72,23 @@ namespace patcher
         bits = sys::osBit();
     }
 
-    int Config::getBits()const
+    int Config::getBits()
     {
         return bits;
     }
 
-    std::ostream& operator<<(std::ostream& output,const Config& self)
+    std::ostream& Config::print(std::ostream& output)
     {
         output<<"[website]"<<std::endl
-            <<"url="<<self.url<<std::endl
+            <<"url="<<Config::url<<std::endl
 
             <<"[soft]"<<std::endl
             //<<"name="<<Config::softname<<std::endl
-            <<"version="<<self.version<<std::endl
+            <<"version="<<Config::version<<std::endl
 
             <<"[os]"<<std::endl
-            <<"name="<<self.os<<std::endl
-            <<"bit="<<self.bits<<std::endl;
+            <<"name="<<Config::os<<std::endl
+            <<"bit="<<Config::bits<<std::endl;
         return output;
     }
 
@@ -111,7 +115,7 @@ namespace patcher
     void Config::makeFile()
     {
         std::fstream f(filename, std::fstream::out | std::fstream::trunc);
-        f<<*this;
+        print(f);
         f.close();
     }
 

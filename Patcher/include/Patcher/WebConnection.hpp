@@ -11,8 +11,6 @@
 
 namespace patcher
 {
-    class Config;
-
     class WebConnection
     {
         public:
@@ -24,14 +22,13 @@ namespace patcher
              * \brief Construct the WebConnection
              * \param conf the patcher configuration
              */
-            WebConnection(Config& conf);
+            WebConnection();
                 
             std::string majUrl()const;
 
             std::list<Maj> getMaj();
 
         private:
-            Config& config;
             QNetworkRequest request;
             QNetworkAccessManager networkManager;
 

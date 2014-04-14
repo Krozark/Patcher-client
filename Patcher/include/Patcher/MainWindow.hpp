@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 #include <QString>
+#include <list>
 
 namespace patcher
 {
@@ -16,11 +17,15 @@ namespace patcher
             MainWindow(const QString& title="");
             ~MainWindow();
 
+        public slots:
+            void showVersion()const;
+            void setUrl()const;
+            void maj()const;
+
         private:
             void initMenu();
-            QAction* actionQuitter;
-            QAction* actionConfiguration;
-            QAction* actionVersion;
+            std::list<QAction*> actions;
+            std::list<QMenu*> menus;
     };
 }
 

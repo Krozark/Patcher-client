@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 
-#include <Patcher/Config.hpp>
 
 namespace patcher
 {
@@ -14,7 +13,7 @@ namespace patcher
             Maj(const Maj&) = delete;
             Maj& operator=(const Maj&) = delete;
 
-            Maj(Config& conf,int action,std::string filename,std::string url="");
+            Maj(int action,std::string filename,std::string url="");
 
             const int action; ///<choices=[(0,"unknow"),(1,"New"),(2,"Maj"),(3,"Deleted")]
             const std::string filename;///<the real file name
@@ -26,8 +25,6 @@ namespace patcher
 
             friend std::ostream& operator<<(std::ostream& output,const Maj& self);
         private:
-
-            Config& config;
 
             bool done;///< is done?
 

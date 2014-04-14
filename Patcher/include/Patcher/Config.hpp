@@ -11,46 +11,48 @@ namespace patcher
     class Config
     {
         public:
+            Config() = delete;
             Config(const Config&) = delete;
             Config& operator=(const Config&) = delete;
 
             static const std::string filename;
             static std::string softname;
 
-            Config();
+            static void init();
 
-            void setUrl(const std::string&);
-            void setUrl();
-            const std::string getUrl() const;
+            static void setUrl(const std::string&);
+            static void setUrl();
+            static const std::string getUrl();
 
-            void setVersion(int);
-            int getVersion() const;
+            static void setVersion(int);
+            static int getVersion();
 
-            void setOs();
-            const std::string getOs() const;
+            static void setOs();
+            static const std::string getOs();
 
-            void setBits();
-            int getBits() const;
+            static void setBits();
+            static int getBits();
 
-            void makeFile();
+            static void makeFile();
 
-            friend std::ostream& operator<<(std::ostream& output,const Config& self);
+            static std::ostream& print(std::ostream& output);
 
             /**
              * \brief convert number version to x.y.z
              * \param number a number version
              */
             static std::string numberToString(int number);
+
             
         private:
-            void makeDefault();
-            void loadFile(QFile& f);
-            void createOrLoad();
+            static void makeDefault();
+            static void loadFile(QFile& f);
+            static void createOrLoad();
 
-            std::string url;
-            unsigned int version;
-            std::string os;
-            unsigned int bits;
+            static std::string url;
+            static unsigned int version;
+            static std::string os;
+            static unsigned int bits;
 
     };
 }

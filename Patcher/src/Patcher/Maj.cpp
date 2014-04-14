@@ -1,4 +1,5 @@
 #include <Patcher/Maj.hpp>
+#include <Patcher/Config.hpp>
 
 #include <QObject>
 #include <QUrl>
@@ -14,7 +15,7 @@
 namespace patcher
 {
     
-    Maj::Maj(Config& conf,int action,std::string filename,std::string url): action(action), filename(filename), url(url),config(conf), done(false)
+    Maj::Maj(int action,std::string filename,std::string url): action(action), filename(filename), url(url), done(false)
     {
     }
 
@@ -50,7 +51,7 @@ namespace patcher
     {
         std::cout<<"[patcher] download file \""<<filename<<"\" from "<<url<<" "<<std::flush;
 
-        QUrl base_url(config.getUrl().c_str());
+        QUrl base_url(Config::getUrl().c_str());
         QUrl relative_url(url.c_str());
         QUrl url =  base_url.resolved(relative_url);
 

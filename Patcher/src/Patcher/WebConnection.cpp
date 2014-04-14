@@ -21,7 +21,7 @@ namespace patcher
 {
     //url(r'^maj/(?P<soft>[\w-]+)/(?P<from_major>[\d]+).(?P<from_minor>[\d]+).(?P<from_patch>[\d]+)/((?P<to_key>last)|(?P<to_major>[\d]+).(?P<to_minor>[\d]+).(?P<to_patch>[\d]+))/(?P<os>[\w-]+)-x(?P<bit>[\d]+).json'),
 
-    WebConnection::WebConnection(Config& conf) : config(conf)
+    WebConnection::WebConnection()
     {
     }
 
@@ -30,9 +30,9 @@ namespace patcher
         std::stringstream stream;
         stream<<"maj/"
             <<Config::softname<<"/"
-            <<Config::numberToString(config.getVersion())<<"/"
+            <<Config::numberToString(Config::getVersion())<<"/"
             <<"last/"
-            <<config.getOs()<<"-x"<<config.getBits()<<".json";
+            <<Config::getOs()<<"-x"<<Config::getBits()<<".json";
         return stream.str();
     }
 
@@ -41,7 +41,7 @@ namespace patcher
         std::list<Maj> results;
         
 
-        QUrl base_url(config.getUrl().c_str());
+        QUrl base_url(Config::getUrl().c_str());
         QUrl relative_url(majUrl().c_str());
         QUrl url =  base_url.resolved(relative_url);
 
@@ -96,15 +96,14 @@ namespace patcher
         for(int i=0;i<_size;++i)
         {
             QJsonObject file = files.at(i).toObject();
-            results.emplace_back(config,
-                                 file.value("action").toVariant().value<int>(),
+            results.emplace_back(file.value("action").toVariant().value<int>(),
                                  file.value("filename").toString().toStdString(),
                                  file.value("url").toString().toStdString());
         }
 
 
-        config.setVersion(datas.value("version").toVariant().value<int>());
-        config.makeFile();
+        Config::setVersion(datas.value("version").toVariant().value<int>());
+        Config::makeFile();
 
         return results;
     }
