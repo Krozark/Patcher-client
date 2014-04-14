@@ -11,7 +11,7 @@ install:
     && cmake .
     && make -j2 
     && sudo make install
-    && sudo update-alternatives --install /usr/bin/cmake cmake ./bin/cmake 50
+    && sudo update-alternatives --install /usr/bin/cmake cmake `pwd`/bin/cmake 50
     && cd ..
 
 language: cpp
