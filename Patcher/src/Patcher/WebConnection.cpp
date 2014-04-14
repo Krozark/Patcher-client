@@ -36,7 +36,7 @@ namespace patcher
         return stream.str();
     }
 
-    std::list<Maj> WebConnection::getMaj()
+    std::list<Maj> WebConnection::getMaj(std::list<Log>& logs)
     {
         std::list<Maj> results;
         
@@ -92,7 +92,7 @@ namespace patcher
         QJsonObject datas = json.value("datas").toObject();
         QJsonArray files = datas.value("files").toArray();
 
-        const int _size = files.size();
+        int _size = files.size();
         for(int i=0;i<_size;++i)
         {
             QJsonObject file = files.at(i).toObject();
@@ -104,6 +104,17 @@ namespace patcher
 
         Config::setVersion(datas.value("version").toVariant().value<int>());
         Config::makeFile();
+
+
+        ///LOGS
+        QJsonArray qlogs = datas.value("logs").toArray();
+        _size = qlogs.size();
+        for(int i=0;i<_size;++i)
+        {
+            QJsonObject log = qlogs.at(i).toObject();
+            logs.emplace_back(log.value("version").toVariant().value<int>(),
+                              log.value("msg").toString().toStdString());
+        }
 
         return results;
     }

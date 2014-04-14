@@ -3,6 +3,8 @@
 
 #include <QtWidgets>
 #include <QString>
+#include <QListWidget>
+
 
 #include <list>
 #include <Patcher/Maj.hpp>
@@ -30,19 +32,14 @@ namespace patcher
 
         private:
             void initMenu();
-
-            QAction* actionQuitter;
-            QAction* actionConfiguration;
-            QAction* actionVersion;
-
-            
+            void iniMainArea();
             int execMaj();
 
             int maj_avalible;
 
             std::list<Maj> majs;
-            std::list<QAction*> actions;
-            std::list<QMenu*> menus;
+            QListWidget* logList;
+
     };
 }
 

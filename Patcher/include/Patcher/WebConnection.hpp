@@ -8,6 +8,7 @@
 #include <QNetworkRequest>
 
 #include <Patcher/Maj.hpp>
+#include <Patcher/Log.hpp>
 
 namespace patcher
 {
@@ -26,7 +27,7 @@ namespace patcher
                 
             std::string majUrl()const;
 
-            std::list<Maj> getMaj();
+            std::list<Maj> getMaj(std::list<Log>& logs);
 
         private:
             QNetworkRequest request;
