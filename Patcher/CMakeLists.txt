@@ -18,11 +18,11 @@ set(VERSION_PATCH 0)
 
 
 
-# add an option for choosing the build type (shared or static)
-#set_option(BUILD_SHARED_LIBS FALSE BOOL "TRUE to build as shared libraries, FALSE to build it as static libraries")
-
 # add an option for building the API documentation
 set_option(BUILD_DOC TRUE BOOL "TRUE to generate the API documentation, FALSE to ignore it")
+
+# add an option for building the API documentation
+set_option(BUILD_EXEMPLES TRUE BOOL "TRUE to generate the API exemples, FALSE to ignore it")
 
 ############ QT ####################
 if(WIN32)
@@ -55,7 +55,7 @@ set(CMAKE_CXX_FLAGS "${DEFINES} ${WARNING} ${FLAGS}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(LIB_INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/exemples )
 
 # add the subdirectories
 add_subdirectory(src/${CMAKE_PROJECT_NAME})
@@ -65,3 +65,6 @@ if(BUILD_DOC)
     add_subdirectory(doc)
 endif()
 
+if(BUILD_EXEMPLES)
+    add_subdirectory(exemples)
+endif()
