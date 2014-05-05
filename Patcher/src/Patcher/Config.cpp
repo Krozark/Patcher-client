@@ -34,7 +34,7 @@ namespace patcher
         QString u;
         QString msg = "";
         do {
-            u = QInputDialog::getText(nullptr, "title", "Url du site"+msg, QLineEdit::Normal);
+            u = QInputDialog::getText(nullptr, "title", "Url du site"+msg, QLineEdit::Normal,url.c_str());
             msg = " Une URL est obligatoire";
         }
         while(u.isEmpty());
@@ -162,6 +162,9 @@ namespace patcher
 
        if(not QDir("download").exists())
            QDir().mkdir("download");
+
+       if(not QDir("logs").exists())
+           QDir().mkdir("logs");
 
         if(!f.exists()) 
         {       

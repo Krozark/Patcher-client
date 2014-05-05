@@ -4,6 +4,8 @@
 #include <QtWidgets>
 #include <QString>
 #include <QListWidget>
+#include <QProcess>
+#include <QVBoxLayout>
 
 
 #include <list>
@@ -28,6 +30,8 @@ namespace patcher
             void configSetUrl()const;
             void configMaj();
             void configReset()const;
+            void runSoft();
+            void quit();
 
 
         private:
@@ -38,7 +42,10 @@ namespace patcher
             int maj_avalible;
 
             std::list<Maj> majs;
-            QListWidget* logList;
+            //QListWidget* logList;
+            QVBoxLayout layout;
+
+            QProcess soft_thread;
 
     };
 }

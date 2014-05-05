@@ -7,8 +7,8 @@
 #include <QListWidgetItem>
 #include <QLabel>
 #include <QGroupBox>
-#include <QVBoxLayout>
 #include <QScrollArea>
+#include <QMessageBox>
 
 #include <Patcher/Config.hpp>
 #include <Patcher/Log.hpp>
@@ -24,13 +24,18 @@
 
 namespace patcher
 {
-    Patcher::Patcher(const std::string& soft) : QMainWindow(), maj_avalible(0), logList(nullptr)
+    Patcher::Patcher(const std::string& soft) : QMainWindow(), maj_avalible(0)//, logList(nullptr)
     {
         patcher::Config::softname = soft;
 
          setWindowTitle(("Patcher - "+soft).c_str());
          initMenu();
          iniMainArea();
+         soft_thread.setStandardOutputFile(("logs/"+soft+".txt").c_str(),QIODevice::Append);
+         soft_thread.setStandardErrorFile(("logs/"+soft+".err.txt").c_str(),QIODevice::Append);
+         QStringList env = QProcess::systemEnvironment();
+         env<<"LD_LIBRARY_PATH=.";
+         soft_thread.setEnvironment(env);
     }
 
     Patcher::~Patcher()
@@ -61,22 +66,16 @@ namespace patcher
 
         std::list<Log> logs;
         majs = con.getMaj(logs);
-        logList->clear();
+        //layout.clear();
 
         for(Log& log : logs)
         {
-            QListWidgetItem* item = new QListWidgetItem();
-            logList->addItem(item);
-            
-            QGroupBox* widget = new QGroupBox(log.getNumber().c_str());
+            QLabel* widget = new QLabel((log.getNumber()
+                                           +": "
+                                           +log.getMsg()).c_str());
+            //widget->setMinimumSize(widget->minimumSizeHint());
 
-            QVBoxLayout *layout = new QVBoxLayout;
-            layout->addWidget(new QGroupBox(log.getMsg().c_str()));
-            layout->addStretch(1);
-
-            widget->setLayout(layout);
-
-            logList->setItemWidget(item,widget);
+            this->layout.addWidget(widget);
 
             std::cout<<log.getNumber()<<" "<<log.getMsg()<<std::endl;
         }
@@ -94,14 +93,39 @@ namespace patcher
         Config::makeDefault();
     }
 
+    void Patcher::runSoft()
+    {
+        QString name = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + QDir::separator() + Config::softname.c_str()).toString();
+        #if __WIN32
+            name +=".exe";
+        #endif
+        soft_thread.start(name);
+    }
+
+    void Patcher::quit()
+    {
+        if(soft_thread.state() == QProcess::Running)
+        {
+            QMessageBox::warning(nullptr,"Error",QString((Config::softname+" is running. Close it.").c_str()));
+        }
+        else
+            qApp->quit();
+    }
+
+    ////////
+
     void Patcher::initMenu()
     {
         //Fichier
         QMenu* menuFichier  = menuBar()->addMenu("&Fichier");
         ///Quitter
 
+        ADD_ACTION(menuFichier,actionRun,("Lancer" + Config::softname).c_str());
+        connect(actionRun, SIGNAL(triggered()),this, SLOT(runSoft()));
+        actionRun->setShortcut(QKeySequence("Ctrl+Enter"));
+
         ADD_ACTION(menuFichier,actionQuitter,"&Quitter");
-        connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
+        connect(actionQuitter, SIGNAL(triggered()),this, SLOT(quit()));
         actionQuitter->setShortcut(QKeySequence("Ctrl+Q"));
         //actionQuitter->setIcon(QIcon("quitter.png"));
 
@@ -133,12 +157,7 @@ namespace patcher
     {
        QWidget* zoneCentrale = new QScrollArea;
 
-       delete(logList);
-       logList = new QListWidget(zoneCentrale);
-       logList->setAlternatingRowColors(true);
-       QVBoxLayout* layout = new QVBoxLayout(zoneCentrale);
-       layout->addWidget(logList);
-       zoneCentrale->setLayout(layout);
+       zoneCentrale->setLayout(&layout);
        setCentralWidget(zoneCentrale);
     }
 

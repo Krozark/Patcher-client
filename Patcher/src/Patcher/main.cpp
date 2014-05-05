@@ -7,7 +7,7 @@ int main(int argc,char* argv[])
 {
     QApplication App(argc, argv);
 
-    patcher::Patcher patcher("Harpe-client");
+    patcher::Patcher patcher("harpe-client");
     patcher.show();
 
     patcher.start();

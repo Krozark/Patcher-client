@@ -111,11 +111,18 @@ namespace patcher
         #else
         if (filename == Config::softname)
         #endif
+        {
+            std::cout<<"Add exe to :"<<filename<<std::endl;
             QFile::setPermissions(filename.c_str(),
                                   QFile::ReadOwner|QFile::WriteOwner|QFile::ExeOwner
                                   |QFile::ReadGroup|QFile::ExeGroup
                                   |QFile::ReadOther|QFile::ExeOther
                                   );
+        }
+        else
+        {
+            std::cout<<filename<<" "<<Config::softname<<std::endl;
+        }
         return ok;
     }
     
