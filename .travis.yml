@@ -19,5 +19,5 @@ compiler: g++
 
 script : g++ -v
     && cd Patcher
-    && /usr/local/share/cmake-2.8 .
+    && /usr/local/bin/cmake .
     && make
