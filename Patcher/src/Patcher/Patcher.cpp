@@ -27,15 +27,16 @@ namespace patcher
     Patcher::Patcher(const std::string& soft) : QMainWindow(), maj_avalible(0)//, logList(nullptr)
     {
         patcher::Config::softname = soft;
+        setFixedSize(400,300);
 
-         setWindowTitle(("Patcher - "+soft).c_str());
-         initMenu();
-         iniMainArea();
-         soft_thread.setStandardOutputFile(("logs/"+soft+".txt").c_str(),QIODevice::Append);
-         soft_thread.setStandardErrorFile(("logs/"+soft+".err.txt").c_str(),QIODevice::Append);
-         QStringList env = QProcess::systemEnvironment();
-         env<<"LD_LIBRARY_PATH=.";
-         soft_thread.setEnvironment(env);
+        setWindowTitle(("Patcher - "+soft).c_str());
+        initMenu();
+        iniMainArea();
+        soft_thread.setStandardOutputFile(("logs/"+soft+".txt").c_str(),QIODevice::Append);
+        soft_thread.setStandardErrorFile(("logs/"+soft+".err.txt").c_str(),QIODevice::Append);
+        QStringList env = QProcess::systemEnvironment();
+        env<<"LD_LIBRARY_PATH=.";
+        soft_thread.setEnvironment(env);
     }
 
     Patcher::~Patcher()
