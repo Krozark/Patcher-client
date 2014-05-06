@@ -9,7 +9,7 @@
 
 
 #include <list>
-#include <Patcher/Maj.hpp>
+#include <patcher/Maj.hpp>
 
 namespace patcher
 {

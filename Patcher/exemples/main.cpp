@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include <Patcher/Patcher.hpp>
+#include <patcher/Patcher.hpp>
 
 
 int main(int argc,char* argv[])

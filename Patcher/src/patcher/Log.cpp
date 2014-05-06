@@ -1,6 +1,6 @@
-#include <Patcher/Log.hpp>
+#include <patcher/Log.hpp>
 
-#include <Patcher/Config.hpp>
+#include <patcher/Config.hpp>
 
 namespace patcher
 {

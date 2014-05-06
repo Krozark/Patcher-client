@@ -9,7 +9,7 @@ macro(set_option var default type docstring)
 endmacro()
 
 # project name
-project (Patcher)
+project (patcher)
 
 # setup version numbers
 set(VERSION_MAJOR 0)

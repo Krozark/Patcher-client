@@ -7,8 +7,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 
-#include <Patcher/Maj.hpp>
-#include <Patcher/Log.hpp>
+#include <patcher/Maj.hpp>
+#include <patcher/Log.hpp>
 
 namespace patcher
 {

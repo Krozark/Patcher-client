@@ -1,7 +1,8 @@
-#include <Patcher/Patcher.hpp>
+#include <patcher/Patcher.hpp>
 
-#include <Patcher/Config.hpp>
-#include <Patcher/WebConnection.hpp>
+#include <patcher/Config.hpp>
+#include <patcher/WebConnection.hpp>
+#include <patcher/Log.hpp>
 
 #include <QProgressBar>
 #include <QListWidgetItem>
@@ -10,8 +11,6 @@
 #include <QScrollArea>
 #include <QMessageBox>
 
-#include <Patcher/Config.hpp>
-#include <Patcher/Log.hpp>
 
 
 #include <iostream>

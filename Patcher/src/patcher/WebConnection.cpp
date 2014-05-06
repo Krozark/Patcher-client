@@ -1,6 +1,6 @@
-#include <Patcher/WebConnection.hpp>
-#include <Patcher/Config.hpp>
-#include <Patcher/Maj.hpp>
+#include <patcher/WebConnection.hpp>
+#include <patcher/Config.hpp>
+#include <patcher/Maj.hpp>
 
 #include <sstream>
 

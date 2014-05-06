@@ -1,5 +1,5 @@
-#include <Patcher/Maj.hpp>
-#include <Patcher/Config.hpp>
+#include <patcher/Maj.hpp>
+#include <patcher/Config.hpp>
 
 #include <QObject>
 #include <QUrl>

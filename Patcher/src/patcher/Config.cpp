@@ -1,4 +1,4 @@
-#include <Patcher/Config.hpp>
+#include <patcher/Config.hpp>
 
 #include <QUrl>
 #include <QInputDialog>
