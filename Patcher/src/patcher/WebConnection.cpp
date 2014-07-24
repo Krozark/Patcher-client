@@ -28,7 +28,7 @@ namespace patcher
     std::string WebConnection::majUrl()const
     {
         std::stringstream stream;
-        stream<<"maj/"
+        stream<<"patcher/maj/"
             <<Config::softname<<"/"
             <<Config::numberToString(Config::getVersion())<<"/"
             <<"last/"
