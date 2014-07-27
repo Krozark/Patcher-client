@@ -166,11 +166,11 @@ namespace patcher
        if(not QDir("logs").exists())
            QDir().mkdir("logs");
 
-        if(!f.exists()) 
-        {       
+        if(!f.exists())
+        {
             makeDefault();
             makeFile();
-        }  
+        }
         else
         {
             loadFile(f);

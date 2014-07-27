@@ -26,7 +26,7 @@ set_option(BUILD_EXEMPLES TRUE BOOL "TRUE to generate the API exemples, FALSE to
 
 ############ QT ####################
 if(WIN32)
-	set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.2.1-mingw/5.2.1/mingw48_32")
+	set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.2.1/5.2.1/mingw48_32")
 endif()
 # Appeler automatique le moc quand nécessaire
 SET(CMAKE_AUTOMOC ON)

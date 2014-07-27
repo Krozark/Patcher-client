@@ -46,7 +46,6 @@ namespace patcher
             QVBoxLayout layout;
 
             QProcess soft_thread;
-
     };
 }
 
