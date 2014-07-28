@@ -31,8 +31,8 @@ namespace patcher
         setWindowTitle(("Patcher - "+soft).c_str());
         initMenu();
         iniMainArea();
-        soft_thread.setStandardOutputFile(("logs/"+soft+".txt").c_str(),QIODevice::Append);
-        soft_thread.setStandardErrorFile(("logs/"+soft+".err.txt").c_str(),QIODevice::Append);
+        soft_thread.setStandardOutputFile(("logs/"+soft+".txt").c_str()/*,QIODevice::Append*/);
+        soft_thread.setStandardErrorFile(("logs/"+soft+".err.txt").c_str()/*,QIODevice::Append*/);
         QStringList env = QProcess::systemEnvironment();
         env<<"LD_LIBRARY_PATH=.";
         soft_thread.setEnvironment(env);
@@ -45,6 +45,11 @@ namespace patcher
     void Patcher::start()
     {
         configMaj();
+    }
+
+    void Patcher::add_arg(const std::string& arg)
+    {
+        args<<QString(arg.c_str());
     }
     
     //// SLOTS //////
@@ -93,13 +98,21 @@ namespace patcher
         Config::makeDefault();
     }
 
-    void Patcher::runSoft()
+    bool Patcher::runSoft()
     {
-        QString name = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + QDir::separator() + Config::softname.c_str()).toString();
+        //QString name = QUrl::fromLocalFile(QCoreApplication::applicationDirPath() + QDir::separator() + Config::softname.c_str()).toString();
+        QString name = Config::softname.c_str();
         #if __WIN32
             name +=".exe";
         #endif
-        soft_thread.start(name);
+        soft_thread.start(name,args);
+        if(soft_thread.waitForStarted())
+        {
+            std::cerr<<name.toStdString()<<" start"<<std::endl;
+            return true;
+        }
+            std::cerr<<name.toStdString()<<" do not start ("<<soft_thread.exitStatus()<<")"<<std::endl;
+        return false;
     }
 
     void Patcher::quit()

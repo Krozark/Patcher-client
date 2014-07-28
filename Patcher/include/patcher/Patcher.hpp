@@ -25,14 +25,15 @@ namespace patcher
 
             void start();
 
+            void add_arg(const std::string& arg);
+
         public slots:
             void showVersion()const;
             void configSetUrl()const;
             void configMaj();
             void configReset()const;
-            void runSoft();
+            bool runSoft();
             void quit();
-
 
         private:
             void initMenu();
@@ -44,7 +45,7 @@ namespace patcher
             std::list<Maj> majs;
             //QListWidget* logList;
             QVBoxLayout layout;
-
+            QStringList args;
             QProcess soft_thread;
     };
 }

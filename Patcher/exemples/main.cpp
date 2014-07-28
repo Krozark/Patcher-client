@@ -10,6 +10,8 @@ int main(int argc,char* argv[])
     patcher::Patcher patcher("harpe-client");
     patcher.show();
 
+    for(int i=1;i<argc;++i)
+        patcher.add_arg(argv[i]);
     patcher.start();
 
     return App.exec();
