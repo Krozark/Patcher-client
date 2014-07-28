@@ -32,7 +32,7 @@ namespace patcher
         initMenu();
         iniMainArea();
         soft_thread.setStandardOutputFile(("logs/"+soft+".txt").c_str()/*,QIODevice::Append*/);
-        soft_thread.setStandardErrorFile(("logs/"+soft+".err.txt").c_str()/*,QIODevice::Append*/);
+        soft_thread.setStandardErrorFile(("logs/"+soft+".txt").c_str()/*,QIODevice::Append*/);
         QStringList env = QProcess::systemEnvironment();
         env<<"LD_LIBRARY_PATH=.";
         soft_thread.setEnvironment(env);
