@@ -4,6 +4,7 @@
 #include <QInputDialog>
 #include <QSettings>
 #include <QDir>
+#include <QCoreApplication>
 
 #include <fstream>
 #include <sstream>
@@ -21,6 +22,7 @@ namespace patcher
 
     void Config::init()
     {
+        QDir::setCurrent(QCoreApplication::applicationDirPath());
         createOrLoad();
     }
 
