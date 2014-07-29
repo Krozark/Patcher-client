@@ -73,16 +73,28 @@ namespace patcher
         majs = con.getMaj(logs);
         //layout.clear();
 
-        for(Log& log : logs)
+        if(logs.size() > 0)
         {
-            QLabel* widget = new QLabel((log.getNumber()
-                                           +": "
-                                           +log.getMsg()).c_str());
-            //widget->setMinimumSize(widget->minimumSizeHint());
+            for(Log& log : logs)
+            {
+                QLabel* widget = new QLabel((log.getNumber()
+                                               +": "
+                                               +log.getMsg()).c_str());
+                //widget->setMinimumSize(widget->minimumSizeHint());
 
-            this->layout.addWidget(widget);
+                this->layout.addWidget(widget);
 
-            std::cout<<log.getNumber()<<" "<<log.getMsg()<<std::endl;
+                std::cout<<log.getNumber()<<" "<<log.getMsg()<<std::endl;
+            }
+        }
+        else
+        {
+                QLabel* widget = new QLabel(("Aucune mise à jour disponnible"));
+                //widget->setMinimumSize(widget->minimumSizeHint());
+
+                this->layout.addWidget(widget);
+
+                std::cout<<"No Maj"<<std::endl;
         }
 
         maj_avalible = majs.size();
