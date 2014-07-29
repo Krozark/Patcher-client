@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <Patcher/Patcher.hpp>
+#include "../../include/patcher/Patcher.hpp"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -70,7 +70,7 @@ static const uint qt_meta_data_patcher__Patcher[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Bool,
     QMetaType::Void,
 
        0        // eod
@@ -85,12 +85,12 @@ void patcher::Patcher::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 1: _t->configSetUrl(); break;
         case 2: _t->configMaj(); break;
         case 3: _t->configReset(); break;
-        case 4: _t->runSoft(); break;
+        case 4: { bool _r = _t->runSoft();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 5: _t->quit(); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject patcher::Patcher::staticMetaObject = {
